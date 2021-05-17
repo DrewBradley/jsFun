@@ -335,7 +335,10 @@ const classPrompts = {
     //   { roomLetter: 'G', program: 'FE', capacity: 29 }
     // ]
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    const result = classrooms.reduce((acc, classroom) => {
+      classroom.program === 'FE' && acc.push(classroom)
+      return acc
+    }, [] );
     return result;
 
     // Annotation:

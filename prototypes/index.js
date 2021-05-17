@@ -399,7 +399,10 @@ const bookPrompts = {
     //   'Catch-22', 'Treasure Island']
 
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    const result = books.reduce((acc, book) => {
+      book.genre !== "Horror" && acc.push(book.title) || book.genre !== "True Crime" && acc.push(book.title) 
+      return acc
+    }, []);
     return result;
 
     // Annotation:

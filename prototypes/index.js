@@ -1,3 +1,4 @@
+/* eslint-disable */
 const { kitties } = require('./datasets/kitties');
 const { clubs } = require('./datasets/clubs');
 const { mods } = require('./datasets/mods');
@@ -27,21 +28,30 @@ const kittyPrompts = {
 
     // Return an array of just the names of kitties who are orange e.g.
     // ['Tiger', 'Snickers']
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    const result = kitties.filter(kitty => kitty.color === 'orange').map(orangeCat => orangeCat.name);
     return result;
 
     // Annotation:
-    // Write your annotation here as a comment
+    // Input: array of kitties objects
+    // Output: array of kitty names that are orange
+    // use filter to find only orange cats
+    // use map to return only those names
+    // filter out all orange cats
+    // map over all those orange cat objects and get their names
   },
 
   sortByAge() {
     // Sort the kitties by their age
-
-    const result = 'REPLACE WITH YOUR RESULT HERE';
-    return result;
+    const sortedcats = kitties.sort((a, b) => {
+      return b.age - a.age
+    })
+    
+    return sortedcats;
 
     // Annotation:
-    // Write your annotation here as a comment
+    // Input: Array of cat objects
+    // Output: Array of cats sorted by age from greatest to least
+    // methods: sort
   },
 
   growUp() {
@@ -58,8 +68,16 @@ const kittyPrompts = {
     // },
     // ...etc]
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
-    return result;
+    const growedUpCats = kitties.map(cat => {
+      cat.age += 2;
+      return cat;
+    });
+    return growedUpCats;
+
+    // Annotate:
+    // Input: array of kitty objects
+    // Output: array of kitties who are 2 years older
+    // Method: map()
   }
 };
 
@@ -90,11 +108,23 @@ const clubPrompts = {
     //   ...etc
     // }
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
-    return result;
+    const clubsByMemberName = clubs.reduce((membersObj, club) => {
+      club.members.forEach(name => {
+        if(membersObj[name]) {
+          membersObj[name].push(club.club)
+        } else {
+          membersObj[name] = [club.club];
+        }
+      })
+      return membersObj;
+    }, {})
+    return clubsByMemberName;
 
     // Annotation:
-    // Write your annotation here as a comment
+    // Input: An array of club objects containing members
+    // Output: An object with key/val pairs 
+    // {name: ["club1", "club1"]}
+    // Method: map()
   }
 };
 
@@ -126,11 +156,15 @@ const modPrompts = {
     //   { mod: 4, studentsPerInstructor: 8 }
     // ]
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    const result = mods.map(mod => {
+      return { mod: mod.mod , studentsPerInstructor: (mod.students / mod.instructors) }
+    });
     return result;
 
     // Annotation:
-    // Write your annotation here as a comment
+    // input: array of objects containing mod, students, instructors
+    // output: array of objects with mod and student/teacher ratio
+    // methods: map()
   }
 };
 
@@ -161,11 +195,15 @@ const cakePrompts = {
     //    ..etc
     // ]
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    const result = cakes.map(cake => {
+      return { flavor: cake.cakeFlavor, inStock: cake.inStock }
+    });
     return result;
 
     // Annotation:
-    // Write your annotation here as a comment
+    // input: array of objects containing flavor, icing, etc... stock.
+    // output: array of objects with flavor of the cake and stock
+    // methods: map()
   },
 
   onlyInStock() {
@@ -189,22 +227,31 @@ const cakePrompts = {
     // ..etc
     // ]
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    const result = cakes.filter(cake => {
+      return cake.inStock > 0;
+    });
     return result;
 
     // Annotation:
-    // Write your annotation here as a comment
+    // input: array of objects containing flavor, icing, etc... stock.
+    // output: array of only the cakes that are in stock
+    // methods: filter
   },
 
   totalInventory() {
     // Return the total amount of cakes in stock e.g.
     // 59
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    const result = cakes.reduce((acc, cake) => {
+      acc += cake.inStock;
+      return acc;
+    }, 0);
     return result;
 
     // Annotation:
-    // Write your annotation here as a comment
+    // INPUT: Array of cake objects, with a property of stock
+    // OUTPUT: A number representing the total amount of cakes in stock
+    // METHODS: reduce
   },
 
   allToppings() {
@@ -212,11 +259,22 @@ const cakePrompts = {
     // every cake in the dataset e.g.
     // ['dutch process cocoa', 'toasted sugar', 'smoked sea salt', 'berries', ..etc]
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    const result = cakes.reduce((toppingList, cake) => {
+      cake.toppings.forEach(topping => {
+        if (toppingList.includes(topping)) {
+          return
+        } else {
+          toppingList.push(topping)
+        }
+      })
+      return toppingList;
+    }, []);
     return result;
 
     // Annotation:
-    // Write your annotation here as a comment
+    // INPUT: Array of cake objects, with a property of stocks
+    // OUTPUT: array with list of unique topping, with no duplicates.
+    // METHODS: reduce
   },
 
   groceryList() {
@@ -230,11 +288,23 @@ const cakePrompts = {
     //    ...etc
     // }
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+
+    const result = cakes.reduce((groceryListObj, cake) => {
+      cake.toppings.forEach(topping => {
+        if (groceryListObj[topping]) {
+          groceryListObj[topping] += 1
+        } else {
+          groceryListObj[topping] = 1
+        } 
+      })
+      return groceryListObj;
+    }, {});
     return result;
 
     // Annotation:
-    // Write your annotation here as a comment
+    // INPUT: Array of cake objects, with a property of stock
+    // OUTPUT: an object where the keys are each topping, and the values are the amount of that topping I need to buy
+    // METHODS: reduce
   }
 };
 
@@ -284,7 +354,9 @@ const classPrompts = {
     return result;
 
     // Annotation:
-    // Write your annotation here as a comment
+    // INPUT:
+    // OUTPUT:
+    // METHODS:
   },
 
   sortByCapacity() {
@@ -294,7 +366,9 @@ const classPrompts = {
     return result;
 
     // Annotation:
-    // Write your annotation here as a comment
+    // INPUT:
+    // OUTPUT:
+    // METHODS:
   }
 };
 
@@ -321,7 +395,9 @@ const bookPrompts = {
     return result;
 
     // Annotation:
-    // Write your annotation here as a comment
+    // INPUT:
+    // OUTPUT:
+    // METHODS:
 
   },
   getNewBooks() {
@@ -336,7 +412,9 @@ const bookPrompts = {
     return result;
 
     // Annotation:
-    // Write your annotation here as a comment
+    // INPUT:
+    // OUTPUT:
+    // METHODS:
   }
 
 };
@@ -703,11 +781,18 @@ const astronomyPrompts = {
     //   red: [{obj}]
     // }
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    const result = stars.reduce((starColorObject, star) => {
+      if (!starColorObject[star.color]) {
+        return starColorObject[star]
+      }
+      return starColorObject;
+    }, {});
     return result;
 
     // Annotation:
-    // Write your annotation here as a comment
+    // INPUT: array of stars
+    // OUTPUT: an object with keys of the different colors of the stars
+    // METHOD: reduce. return an object.
   },
 
   constellationsStarsExistIn() {

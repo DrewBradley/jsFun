@@ -239,7 +239,7 @@ describe("PROTOTYPES", () => {
     })
   }),
   describe("Book prompts", () => {
-    it.only("removeViolence", () => {
+    it("removeViolence", () => {
       const e = bookPrompts.removeViolence();
       expect(e).to.deep.equal(['1984',
         'The Great Gatsby',
@@ -256,7 +256,7 @@ describe("PROTOTYPES", () => {
         'Catch-22',
         'Treasure Island'])
     }),
-    it("getNewBooks", () => {
+    it.only("getNewBooks", () => {
       const e = bookPrompts.getNewBooks();
       expect(e).to.deep.equal([{
         title: 'Harry Potter and the Sorcerer\'s Stone', year: 1997 },

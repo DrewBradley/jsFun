@@ -426,11 +426,6 @@ const bookPrompts = {
       return acc
     }, [])
     return result;
-
-    // Annotation:
-    // INPUT:
-    // OUTPUT:
-    // METHODS:
   }
 
 };
@@ -454,8 +449,7 @@ const weatherPrompts = {
     })
     return result;
 
-    // Annotation:
-    // Write your annotation here as a comment
+
   },
 
   findSunnySpots() {
@@ -471,8 +465,6 @@ const weatherPrompts = {
     }, [])
     return result;
 
-    // Annotation:
-    // Write your annotation here as a comment
   },
 
   findHighestHumidity() {
@@ -484,11 +476,10 @@ const weatherPrompts = {
     //   temperature: { high: 49, low: 38 }
     // }
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    const result = weather.find(city => {
+      return 
+    })
     return result;
-
-    // Annotation:
-    // Write your annotation here as a comment
 
   }
 };
